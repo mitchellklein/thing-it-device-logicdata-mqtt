@@ -1,0 +1,27 @@
+{
+  "name": "thing-it-device-logicdata-mqtt",
+  "version": "0.0.1",
+  "description": "[thing-it-node] Device Plugin for LOGICDATA MQTT Devices products.",
+  "authors": "Marc Gille",
+  "license": "MIT, EPL",
+  "keywords": [
+    "IoT",
+    "thing-it",
+    "MQTT",
+    "LOGICDATA",
+    "Smart Furniture",
+    "Smart Office",
+    "Occupancy Sensor"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thing-it/thing-it-device-logicdata-mqtt"
+  },
+  "dependencies": {
+    "mosca": "^2.8.2"
+  },
+  "devDependencies": {
+    "thing-it-test": "0.0.21",
+    "mqtt": "^2.18.2"
+  }
+}
