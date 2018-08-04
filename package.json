@@ -1,6 +1,6 @@
 {
   "name": "thing-it-device-logicdata-mqtt",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "[thing-it-node] Device Plugin for LOGICDATA MQTT Devices products.",
   "authors": "Marc Gille",
   "license": "MIT, EPL",
