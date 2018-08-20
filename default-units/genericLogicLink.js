@@ -2,7 +2,7 @@ module.exports = {
     metadata: {
         plugin: "genericLogicLink",
         label: "LOGICDATA LOGIClink",
-        role: "sensor",
+        role: "actor",
         family: "genericLogicLink",
         deviceTypes: ["logicdata-mqtt/broker"],
         services: [],
@@ -75,7 +75,7 @@ function GenericLogicLink() {
                 }
 
                 this.publishStateChange();
-            }.bind(this), 20000);
+            }.bind(this), 10000);
 
             deferred.resolve();
         }
@@ -91,60 +91,8 @@ function GenericLogicLink() {
             }.bind(this), 60000);
 
             this.device.adapter.listeners.push((client, message) => {
-                if (telegram.deviceId === this.configuration.deviceId) {
+                if (message.deviceId === this.configuration.deviceId) {
                 this.logDebug('Device ' + telegram.friendlyId + ' is processing ', telegram.functions);
-
-                for (var n in telegram.functions) {
-                    if (telegram.functions[n].key === 'motionDetected') {
-
-                        if (telegram.functions[n].value === 'true') {
-                            this.publishEvent('tic', {});
-
-                            this.state.lastMotionTimestamp = moment().toISOString();
-
-                            ++tickCount;
-
-                            this.publishStateChange();
-
-                            if (this.occupancyInterval) {
-                                clearInterval(this.occupancyInterval);
-                            }
-
-                            if (!this.state.occupied) {
-                                this.state.occupied = true;
-
-                                this.publishStateChange();
-                            }
-
-                            // Simulates repeated ticks
-
-                            if (this.configuration.ghostTickInterval) {
-                                this.tickRepeatInterval = setInterval(() => {
-                                        this.logDebug('Sending Ghost Tick');
-                                this.publishEvent('tic', {});
-
-                                this.state.lastMotionTimestamp = moment().toISOString();
-
-                                ++tickCount;
-
-                                this.publishStateChange();
-                            },  this.configuration.ghostTickInterval * 1000);
-                            }
-
-                            this.occupancyInterval = setInterval(() => {
-                                this.state.occupied = false;
-
-                            this.publishStateChange();
-                        }, 30000);
-                        } else {
-                            if (this.tickRepeatInterval) {
-                                clearInterval(this.tickRepeatInterval);
-                            }
-                        }
-
-                        break;
-                    }
-                }
             }
         });
 

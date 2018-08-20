@@ -146,6 +146,8 @@ function Adapter() {
         var mosca = require('mosca');
         var server = new mosca.Server(settings);
 
+        logger.logDebug('Before Broker Start ===========================>');
+
         server.on('clientConnected', function(client) {
             logger.logInfo('MQTT client connected', client.id);
         });
