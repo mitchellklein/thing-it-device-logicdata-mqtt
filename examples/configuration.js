@@ -7,8 +7,8 @@ module.exports = {
         id: "broker",
         plugin: "logicdata-mqtt/broker",
         configuration: {
-            host: "192.168.5.101",
-            port: 8080
+            host: "10.225.219.226",
+            port: 1883
         },
         actors: [{
             "class": "Actor",
@@ -16,7 +16,9 @@ module.exports = {
             "label": "Link 1",
             "type": "genericLogicLink",
             "logLevel": "debug",
-            "configuration": {}
+            "configuration": {
+                deviceId: 'LOGIClink1'
+            }
         }],
         sensors: [],
         logLevel: "debug"
