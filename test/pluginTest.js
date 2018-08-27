@@ -1,6 +1,6 @@
 var assert = require("assert");
 
-describe('[thing-it] EnOcean IP Plugin', function () {
+describe('[thing-it] LOGIClink Broker Plugin', function () {
     var testDriver;
 
     before(function () {
@@ -15,7 +15,7 @@ describe('[thing-it] EnOcean IP Plugin', function () {
         it('should complete without error', function () {
             return testDriver.start({
                 configuration: require("../examples/configuration.js"),
-                heartbeat: 10
+                heartbeat: 20
             });
         });
     });
@@ -28,7 +28,7 @@ describe('[thing-it] EnOcean IP Plugin', function () {
         it('should receive state change messages', function (done) {
             testDriver.addListener({
                 publishActorStateChange: function (deviceId, actorId, state) {
-                    console.log('Event received: ', deviceId, actorId, state);
+                    console.log('Event received: ', actorId);
 
                     if (actorId === 'link1') {
                         done();
