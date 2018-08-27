@@ -96,7 +96,7 @@ function Broker() {
 
             deferred.resolve();
         } else {
-            this.adapter = new Adapter().initialize(this.configuration.port, this);
+            this.adapter = new Adapter().initialize(this.configuration.host, this.configuration.port, this);
 
             this.logDebug('Adapter initialized.');
 
@@ -137,26 +137,20 @@ function Broker() {
 }
 
 function Adapter() {
-    Adapter.prototype.initialize = function (port, logger) {
+    Adapter.prototype.initialize = function (host, port, logger) {
         this.listeners = [];
 
-        // Redis Pub/Sub
-
-        var settings = {port: port}
+        var settings = {host: host, port: port};
         var mosca = require('mosca');
         var server = new mosca.Server(settings);
-
-        logger.logDebug('Before Broker Start ===========================>');
 
         server.on('clientConnected', function(client) {
             logger.logInfo('MQTT client connected', client.id);
         });
 
         server.on('published', function(packet, client) {
-            logger.logDebug('Published', packet.payload);
-
-            for (const listener of this.listeners) {
-                listener(client, packet);
+            for (var n in this.listeners) {
+                this.listeners[n](packet);
             }
         });
 
@@ -174,4 +168,3 @@ function Adapter() {
         this.listeners.push(callback);
     };
 }
-
